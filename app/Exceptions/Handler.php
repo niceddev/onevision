@@ -2,7 +2,9 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\RedirectResponse;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -26,5 +28,18 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    /**
+     * Render the exception into an HTTP response.
+     * @throws Throwable
+     */
+    public function render($request, Throwable $e): RedirectResponse
+    {
+        if ($e instanceof ModelNotFoundException) {
+            return back()->with('error', __('Запись не найдена'));
+        }
+
+        return parent::render($request, $e);
     }
 }

@@ -23,7 +23,7 @@ abstract class PostRepository implements PostInterface
     public function update(Post $post, PostDTO $postDTO): bool
     {
         return $post->update([
-            'author_name' => (object)$postDTO->author_name,
+            'author_name' => $postDTO->getAuthorName(),
         ]);
     }
 

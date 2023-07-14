@@ -9,9 +9,9 @@
     <section class="bg-white dark:bg-gray-900">
         <div class="py-8 px-4 mx-auto max-w-2xl lg:py-36">
             <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">
-                {{ $post?->author_name }}
+                {{ $post->getTitle() }}
             </h2>
-            <form action="{{ route('posts.update', $post) }}" method="POST">
+            <form action="{{ route('posts.update', $post->getId()) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
@@ -21,7 +21,7 @@
                         </label>
                         <input type="text" name="title" id="title"
                                placeholder="{{ __('Введите заголовок поста') }}" required=""
-                               value="{{ $post?->author_name ?? old('author_name') }}"
+                               value="{{ $post->getTitle() ?? old('title') }}"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     </div>
                     <div class="sm:col-span-2">
@@ -31,7 +31,7 @@
                         <textarea name="body" id="body" rows="4"
                                   placeholder="{{ __('О чем этот пост?') }}"
                                   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            {{ $post?->author_name ?? old('body') }}
+                            {{ $post->getBody() ?? old('body') }}
                         </textarea>
                     </div>
                     <div class="sm:col-span-2">
@@ -40,7 +40,7 @@
                         </label>
                         <input type="text" name="author_name" id="author_name"
                                placeholder="{{ __('Введите имя автора') }}" required=""
-                               value="{{ trim($post?->author_name ?? old('author_name')) }}"
+                               value="{{ trim($post->getAuthorName() ?? old('author_name')) }}"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     </div>
                 </div>
